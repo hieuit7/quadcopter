@@ -130,4 +130,4 @@ elif inp == "control":
 elif inp == "stop":
     stop()
 else:
-    print "Thank You for not following the things I'm saying... now you gotta restart the program STUPID!!"
+    print "Thank You for not following the things I'm saying... now you gotta restart the program STUPID!! %s" % inp
