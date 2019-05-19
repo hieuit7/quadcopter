@@ -11,7 +11,7 @@ while True:
     q.increase(q.dc2, speed)
     q.increase(q.dc3, speed)
     q.increase(q.dc4, speed)
-    print("change speed:"+speed)
+    print("change speed:%d", speed)
     inp = input()
     if inp == "a":
         speed +=10
