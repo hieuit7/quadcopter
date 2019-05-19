@@ -3,9 +3,18 @@ import time
 q = quad.QuadCenter()
 time.sleep(1)
 speed = 750
-print("start with 750")
-input("Wait to inter")
+max_value = 2000
+q.start(0)
+input("Please dis connect and enter")
+q.start(max_value)
+input("Please connect battery with two beep and enter")
 q.start(speed)
+time.sleep(5)
+q.start(0)
+time.sleep(2)
+q.start(speed)
+time.sleep(1)
+print("drone now")
 while True:
     q.increase(q.dc1,speed)
     q.increase(q.dc2, speed)
