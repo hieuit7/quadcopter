@@ -11,7 +11,6 @@ while True:
         try:
                 bus.write_byte_data(0x69, 0x20, 0x0F)
         except:
-                print("ss")
                 pass
         # L3G4200D address, 0x68(104)
         # Select Control register4, 0x23(35)
@@ -53,6 +52,7 @@ while True:
         try:
                 data1
         except NameError:
+                print("err")
                 pass
         else:
                 data1 = bus.read_byte_data(0x69, 0x2B)
