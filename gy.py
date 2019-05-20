@@ -104,6 +104,7 @@ while True:
         try:
                 xGyro
         except:
+                print("asdasd123123")
                 pass
         else:
                 print ("Rotation in X-Axis : %d" %xGyro)
@@ -111,6 +112,7 @@ while True:
         try:
                 yGyro
         except:
+                print("asdasd")
                 pass
         else:
                 print ("Rotation in Y-Axis : %d" %yGyro)
@@ -118,6 +120,7 @@ while True:
         try:
                 zGyro
         except:
+                print("888888888")
                 pass
         else:
                 print ("Rotation in Z-Axis : %d" %zGyro)
