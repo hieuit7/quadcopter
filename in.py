@@ -47,6 +47,6 @@ if zGyro > 32767 :
 	zGyro -= 65536
 
 # Output data to screen
-print "Rotation in X-Axis : %d" %xGyro
-print "Rotation in Y-Axis : %d" %yGyro
-print "Rotation in Z-Axis : %d" %zGyro
+print ("Rotation in X-Axis : %d", xGyro)
+print ("Rotation in Y-Axis : %d", yGyro)
+print ("Rotation in Z-Axis : %d",zGyro)
