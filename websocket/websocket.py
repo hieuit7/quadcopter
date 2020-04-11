@@ -33,7 +33,7 @@ async def consumer(message):
     try:
         t.ChangeDutyCycle(float(message))
     except:
-        print("send number")
+        print("send number", message)
 
 async def consumer_handler(websocket, path):
     async for message in websocket:
