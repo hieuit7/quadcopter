@@ -100,10 +100,11 @@ async def consumer_handler(websocket, path, serve):
     async for message in websocket:
         await consumer(serve, message)
 
-
+servo = False
 async def listen(websocket, path):
     clients.add(websocket)
-    serve = Serve(websocket)
+    if not servo:
+        serve = Serve(websocket)
     # await asyncio.wait([websocket.send('ss')])
     consumer_task = asyncio.ensure_future(
         consumer_handler(websocket, path, serve))
