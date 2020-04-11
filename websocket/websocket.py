@@ -43,11 +43,11 @@ async def consumer(message):
     #process event with brushless
     try:
         cycle = float(message)
-        input_cycle = translate(cycle,0,10,0,100)
+        input_cycle = translate(cycle,0,10,0,150)
         t.ChangeDutyCycle(input_cycle)
         print("mess",input_cycle)
     except Exception as e:
-        print("send number", e)
+        print("send number", e, message)
 
 async def consumer_handler(websocket, path):
     async for message in websocket:
