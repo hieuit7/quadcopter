@@ -16,6 +16,7 @@ class Serve:
 
         GPIO.setwarnings(True)
         GPIO.setup(7, GPIO.OUT)
+        GPIO.setup(11, GPIO.OUT)
 
         self.t1 = GPIO.PWM(7, 50)
         self.t2 = GPIO.PWM(11, 50)
