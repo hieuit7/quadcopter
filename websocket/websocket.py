@@ -41,13 +41,15 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 
 async def consumer(message):
     #process event with brushless
+    cy = 0;
     try:
         cycle = float(message)
         input_cycle = translate(cycle,0,10,0,150)
+        cy = input_cycle
         t.ChangeDutyCycle(input_cycle)
         print("mess",input_cycle)
     except Exception as e:
-        print("send number", e, message)
+        print("send number", e, message, cy)
 
 async def consumer_handler(websocket, path):
     async for message in websocket:
