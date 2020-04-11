@@ -52,7 +52,7 @@ class Serve:
         ip = input()
         # time.sleep(5)
         log.info("I setting maximum value")
-        self.change_speed(15)
+        self.change_speed(100)
         log.info(
             "Connect battery now!! you will here two beeps, then wait for a gradual falling tone then press Enter")
         # time.sleep(5)
