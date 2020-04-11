@@ -49,6 +49,8 @@ class Serve:
     def calibrate(self):
         self.change_speed(0)
         log.info("Disconnected ")
+
+        time.sleep(5)
         self.change_speed(15)
         log.info(
             "Connect battery now!! you will here two beeps, then wait for a gradual falling tone then press Enter")
