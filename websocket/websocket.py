@@ -7,33 +7,61 @@ import asyncio
 import json
 import logging
 import websockets
+
 logging.basicConfig()
 clients = set()
 
+
 class Serve:
-    def __init__(self):
+    def __init__(self, websocket):
+        self.websocket = websocket
         GPIO.setmode(GPIO.BOARD)
 
         GPIO.setwarnings(True)
         GPIO.setup(7, GPIO.OUT)
         GPIO.setup(11, GPIO.OUT)
+        GPIO.setup(13, GPIO.OUT)
+        GPIO.setup(15, GPIO.OUT)
 
         self.t1 = GPIO.PWM(7, 50)
         self.t2 = GPIO.PWM(11, 50)
-        # t2 = GPIO.PWM(7, 50)
-        # t2 = GPIO.PWM(7, 50)
+        self.t3 = GPIO.PWM(13, 50)
+        self.t4 = GPIO.PWM(15, 50)
 
         self.t1.start(0)
         self.t2.start(0)
+        self.t3.start(0)
+        self.t4.start(0)
         # time.sleep(10)
 
-        self.t1.ChangeDutyCycle(3)
-        self.t2.ChangeDutyCycle(3)
+        self.change_speed(0)
         time.sleep(3)
 
     def change_speed(self, speed):
         self.t1.ChangeDutyCycle(speed)
         self.t2.ChangeDutyCycle(speed)
+        self.t3.ChangeDutyCycle(speed)
+        self.t4.ChangeDutyCycle(speed)
+
+    def calibrate(self):
+        self.change_speed(0)
+        logging.info("Disconnected ")
+        self.change_speed(15)
+        logging.info(
+            "Connect battery now!! you will here two beeps, then wait for a gradual falling tone then press Enter")
+
+        self.change_speed(1)
+        logging.info("Wierd eh! Special tone")
+        time.sleep(7)
+        logging.info("Wait for it ....")
+        time.sleep(5)
+        logging.info("Im working on it, DONT WORRY JUST WAIT.....")
+        self.change_speed(0)
+        time.sleep(2)
+        logging.info("Arming ESC now...")
+        self.change_speed(1)
+        time.sleep(1)
+        logging.info("See.... uhhhhh")
 
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
@@ -48,23 +76,24 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
     return rightMin + (valueScaled * rightSpan)
 
 
-
 async def consumer(serve, message):
-    #process event with brushless
+    # process event with brushless
     cy = 0;
     try:
-        cycle = float(message)
-
-        input_cycle = translate(abs(cycle),0,150,0,10)
-        cy = input_cycle
-        serve.change_speed(input_cycle)
-        print("mess",input_cycle)
+        if message.startsWith('c'):
+            serve.calibrate()
+        else:
+            cycle = float(message)
+            input_cycle = translate(abs(cycle), 0, 150, 0, 10)
+            cy = input_cycle
+            serve.change_speed(input_cycle)
+            print("mess", input_cycle)
     except Exception as e:
         print("send number", e, message, cy)
 
-async def consumer_handler(websocket, path):
-    serve = Serve()
 
+async def consumer_handler(websocket, path):
+    serve = Serve(websocket)
     async for message in websocket:
         await consumer(serve, message)
 
@@ -80,6 +109,7 @@ async def listen(websocket, path):
     )
     for task in pending:
         task.cancel()
+
 
 start_server = websockets.serve(listen, "0.0.0.0", 6789)
 print("listening 6789")
