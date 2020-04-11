@@ -95,17 +95,18 @@ async def consumer(serve, message):
         log.info("send number", e, message, cy)
 
 
-async def consumer_handler(websocket, path):
-    serve = Serve(websocket)
+async def consumer_handler(websocket, path, serve):
+
     async for message in websocket:
         await consumer(serve, message)
 
 
 async def listen(websocket, path):
     clients.add(websocket)
+    serve = Serve(websocket)
     # await asyncio.wait([websocket.send('ss')])
     consumer_task = asyncio.ensure_future(
-        consumer_handler(websocket, path))
+        consumer_handler(websocket, path, serve))
     done, pending = await asyncio.wait(
         [consumer_task],
         return_when=asyncio.FIRST_COMPLETED,
