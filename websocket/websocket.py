@@ -7,25 +7,33 @@ import asyncio
 import json
 import logging
 import websockets
-
-
-GPIO.setmode(GPIO.BOARD)
-
-GPIO.setwarnings(True)
-GPIO.setup(7, GPIO.OUT)
-
-t = GPIO.PWM(7, 50)
-
-
 logging.basicConfig()
-
 clients = set()
 
-t.start(0)
-# time.sleep(10)
+class Serve:
+    def __init__(self):
+        GPIO.setmode(GPIO.BOARD)
 
-t.ChangeDutyCycle(3)
-time.sleep(3)
+        GPIO.setwarnings(True)
+        GPIO.setup(7, GPIO.OUT)
+
+        self.t1 = GPIO.PWM(7, 50)
+        self.t2 = GPIO.PWM(11, 50)
+        # t2 = GPIO.PWM(7, 50)
+        # t2 = GPIO.PWM(7, 50)
+
+        self.t1.start(0)
+        self.t2.start(0)
+        # time.sleep(10)
+
+        self.t1.ChangeDutyCycle(3)
+        self.t2.ChangeDutyCycle(3)
+        time.sleep(3)
+
+    def change_speed(self, speed):
+        self.t1.ChangeDutyCycle(speed)
+        self.t2.ChangeDutyCycle(speed)
+
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
@@ -39,7 +47,8 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
     return rightMin + (valueScaled * rightSpan)
 
 
-async def consumer(message):
+
+async def consumer(serve, message):
     #process event with brushless
     cy = 0;
     try:
@@ -47,14 +56,16 @@ async def consumer(message):
 
         input_cycle = translate(abs(cycle),0,150,0,10)
         cy = input_cycle
-        t.ChangeDutyCycle(input_cycle)
+        serve.change_speed(input_cycle)
         print("mess",input_cycle)
     except Exception as e:
         print("send number", e, message, cy)
 
 async def consumer_handler(websocket, path):
+    serve = Serve()
+
     async for message in websocket:
-        await consumer(message)
+        await consumer(serve, message)
 
 
 async def listen(websocket, path):
