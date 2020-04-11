@@ -20,12 +20,20 @@ t = GPIO.PWM(7, 50)
 logging.basicConfig()
 
 clients = set()
+
+t.start(0)
+# time.sleep(10)
+
 t.ChangeDutyCycle(3)
+time.sleep(3)
 
 
 async def consumer(message):
     #process event with brushless
-    t.ChangeDutyCycle(message)
+    try:
+        t.ChangeDutyCycle(float(message))
+    except:
+        print("send number")
 
 async def consumer_handler(websocket, path):
     async for message in websocket:
