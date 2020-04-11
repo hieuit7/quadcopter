@@ -9,7 +9,9 @@ import logging
 import websockets
 
 logging.basicConfig()
-logging.setLevel(logging.INFO)
+log = logging.getLogger('websocket')
+log.setLevel(logging.INFO)
+
 clients = set()
 
 
@@ -46,23 +48,23 @@ class Serve:
 
     def calibrate(self):
         self.change_speed(0)
-        logging.info("Disconnected ")
+        log.info("Disconnected ")
         self.change_speed(15)
-        logging.info(
+        log.info(
             "Connect battery now!! you will here two beeps, then wait for a gradual falling tone then press Enter")
 
         self.change_speed(1)
-        logging.info("Wierd eh! Special tone")
+        log.info("Wierd eh! Special tone")
         time.sleep(7)
-        logging.info("Wait for it ....")
+        log.info("Wait for it ....")
         time.sleep(5)
-        logging.info("Im working on it, DONT WORRY JUST WAIT.....")
+        log.info("Im working on it, DONT WORRY JUST WAIT.....")
         self.change_speed(0)
         time.sleep(2)
-        logging.info("Arming ESC now...")
+        log.info("Arming ESC now...")
         self.change_speed(1)
         time.sleep(1)
-        logging.info("See.... uhhhhh")
+        log.info("See.... uhhhhh")
 
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
@@ -88,9 +90,9 @@ async def consumer(serve, message):
             input_cycle = translate(abs(cycle), 0, 150, 0, 10)
             cy = input_cycle
             serve.change_speed(input_cycle)
-            print("mess", input_cycle)
+            log.info("mess", input_cycle)
     except Exception as e:
-        print("send number", e, message, cy)
+        log.info("send number", e, message, cy)
 
 
 async def consumer_handler(websocket, path):
@@ -113,6 +115,6 @@ async def listen(websocket, path):
 
 
 start_server = websockets.serve(listen, "0.0.0.0", 6789)
-print("listening 6789")
+log.info("listening 6789")
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
