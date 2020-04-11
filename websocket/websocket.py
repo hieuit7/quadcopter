@@ -9,6 +9,7 @@ import logging
 import websockets
 
 logging.basicConfig()
+logging.setLevel(logging.INFO)
 clients = set()
 
 
@@ -17,7 +18,7 @@ class Serve:
         self.websocket = websocket
         GPIO.setmode(GPIO.BOARD)
 
-        GPIO.setwarnings(True)
+        GPIO.setwarnings(False)
         GPIO.setup(7, GPIO.OUT)
         GPIO.setup(11, GPIO.OUT)
         GPIO.setup(13, GPIO.OUT)
