@@ -104,6 +104,7 @@ servo = False
 async def listen(websocket, path):
     clients.add(websocket)
     if not servo:
+        log.info("create servo object")
         serve = Serve(websocket)
     # await asyncio.wait([websocket.send('ss')])
     consumer_task = asyncio.ensure_future(
