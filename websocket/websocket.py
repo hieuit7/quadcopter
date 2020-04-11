@@ -92,7 +92,7 @@ async def consumer(serve, message):
             serve.calibrate()
         else:
             cycle = float(message)
-            input_cycle = translate(abs(cycle), 0, 110, 0, 10)
+            input_cycle = translate(abs(cycle), 0, 110, 0, 99)
             cy = input_cycle
             serve.change_speed(input_cycle)
             log.info("mess %f", input_cycle)
