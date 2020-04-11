@@ -48,9 +48,9 @@ class Serve:
 
     def calibrate(self):
         self.change_speed(0)
-        log.info("Disconnected ")
+        log.info("Disconnected then press enter ")
         ip = input()
-        time.sleep(5)
+        # time.sleep(5)
         log.info("I setting maximum value")
         self.change_speed(15)
         log.info(
