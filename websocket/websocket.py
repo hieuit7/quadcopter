@@ -27,12 +27,25 @@ t.start(0)
 t.ChangeDutyCycle(3)
 time.sleep(3)
 
+def translate(value, leftMin, leftMax, rightMin, rightMax):
+    # Figure out how 'wide' each range is
+    leftSpan = leftMax - leftMin
+    rightSpan = rightMax - rightMin
+
+    # Convert the left range into a 0-1 range (float)
+    valueScaled = float(value - leftMin) / float(leftSpan)
+
+    # Convert the 0-1 range into a value in the right range.
+    return rightMin + (valueScaled * rightSpan)
+
 
 async def consumer(message):
     #process event with brushless
     try:
-        t.ChangeDutyCycle(float(message))
-        print("mess")
+        cycle = float(message)
+        input_cycle = translate(cycle,0,10,0,100)
+        t.ChangeDutyCycle(input_cycle)
+        print("mess",input_cycle)
     except Exception as e:
         print("send number", e)
 
