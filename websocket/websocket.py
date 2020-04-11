@@ -49,12 +49,15 @@ class Serve:
     def calibrate(self):
         self.change_speed(0)
         log.info("Disconnected ")
-
+        ip = input()
         time.sleep(5)
+        log.info("I setting maximum value")
         self.change_speed(15)
         log.info(
             "Connect battery now!! you will here two beeps, then wait for a gradual falling tone then press Enter")
-        time.sleep(5)
+        # time.sleep(5)
+        ip = input()
+        log.info("I setting value min")
         self.change_speed(1)
         log.info("Wierd eh! Special tone")
         time.sleep(7)
