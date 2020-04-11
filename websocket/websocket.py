@@ -32,6 +32,7 @@ async def consumer(message):
     #process event with brushless
     try:
         t.ChangeDutyCycle(float(message))
+        print("mess")
     except:
         print("send number", message)
 
