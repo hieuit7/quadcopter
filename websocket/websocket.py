@@ -54,7 +54,7 @@ class Serve:
         self.change_speed(15)
         log.info(
             "Connect battery now!! you will here two beeps, then wait for a gradual falling tone then press Enter")
-
+        time.sleep(5)
         self.change_speed(1)
         log.info("Wierd eh! Special tone")
         time.sleep(7)
