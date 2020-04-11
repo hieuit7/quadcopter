@@ -44,7 +44,7 @@ async def consumer(message):
     cy = 0;
     try:
         cycle = float(message)
-        input_cycle = translate(cycle,0,10,0,150)
+        input_cycle = translate(cycle,0,150,0,10)
         cy = input_cycle
         t.ChangeDutyCycle(input_cycle)
         print("mess",input_cycle)
