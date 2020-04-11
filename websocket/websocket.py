@@ -8,6 +8,9 @@ import json
 import logging
 import websockets
 
+
+GPIO.setmode(GPIO.BOARD)
+
 GPIO.setwarnings(True)
 GPIO.setup(7, GPIO.OUT)
 
