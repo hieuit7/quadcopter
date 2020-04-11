@@ -83,7 +83,7 @@ async def consumer(serve, message):
     # process event with brushless
     cy = 0;
     try:
-        if message.startsWith('c'):
+        if message.startswith('c'):
             serve.calibrate()
         else:
             cycle = float(message)
