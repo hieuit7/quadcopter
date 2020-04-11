@@ -90,9 +90,9 @@ async def consumer(serve, message):
             input_cycle = translate(abs(cycle), 0, 150, 0, 10)
             cy = input_cycle
             serve.change_speed(input_cycle)
-            log.info("mess", input_cycle)
+            log.info("mess %f", input_cycle)
     except Exception as e:
-        log.info("send number", e, message, cy)
+        log.info("send number")
 
 
 async def consumer_handler(websocket, path, serve):
